@@ -95,12 +95,57 @@ One can install Macaulay2 on Ubuntu 22.04 with `apt` as explained on the Macaula
 sudo apt install macaulay2 --yes
 M2
 ```
+
+#### Todo
+
+Add how to check the resources while running
+
+## Expanse on San Diego Supercomputing Center (SDSC)
+
+Expanse provides a linux shell to which one can SSH. One does not have the admin previledge on Expanse. We can `load` the anaconda environment to install SageMath. The rest is similar to the one for Jetstream2, but here we need to use `conda` instead of `mamba`. Generally, `mamba` works much faster than `conda`.
+
+``` shell
+conda create --prefix ~/sage -n sage sage python
+```
+
+To use SageMath, one needs to activate the conda environment. This requires logging out and logging in.
+
+```
+conda init
+exit
+```
+
+Reconnect and run the following command to start SageMath.
+
+```
+conda activate sage
+sage
+```
+
+
 <!-- 
 ## How to use SageMath on HPCs
 
 ## How to use Macaulay2 on HPCs -->
 
+###JupyterLab on Expanse
 
+Singularity container
+
+```
+export PATH="/cm/shared/apps/sdsc/galyleo:${PATH}"
+module load singularitypro
+galyleo launch --account css101 --partition shared --cpus 1 --memory 2 --time-limit 00:30:00 --sif macaulay2_ubuntu_latest.sif 
+```
+
+Build from environment.yml 
+
+```
+export PATH="/cm/shared/apps/sdsc/galyleo:${PATH}"
+galyleo launch --account css101 --partition shared --cpus 1 --memory 2 --time-limit 00:30:00 --conda-yml environment.yml --conda-env sage
+```
+
+Source https://education.sdsc.edu/training/interactive/202206_ciml_si22/section1_3/quickstart-jupyter-notebooks.pdf
 
 ## Todo 
 <!-- 
