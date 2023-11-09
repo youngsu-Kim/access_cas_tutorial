@@ -1,9 +1,9 @@
-Bootstrap: docker
+Bootstrap: library
 From: ubuntu:22.04
 
 %environment
-    export LC_ALL=en_US.utf-8
-    export LANG=en_US.utf-8
+    #export LC_ALL=en_US.utf-8
+    #export LANG=en_US.utf-8
 
 %post
     apt-get -y update

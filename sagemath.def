@@ -1,5 +1,5 @@
 # work in progress
-# code from https://stackoverflow.com/a/61232125
+# code based on https://stackoverflow.com/a/61232125
 Bootstrap: library
 From: ubuntu:22.04
 Stage: build
@@ -8,27 +8,18 @@ Stage: build
     apt-get update && apt-get -y upgrade
     apt-get -y install \
     build-essential \
-    wget \
-    bzip2 \
-    ca-certificates \
-    libglib2.0-0 \
-    libxext6 \
-    libsm6 \
-    libxrender1 \
-    git
-    rm -rf /var/lib/apt/lists/*
+    wget 
     apt-get clean
-    #Installing Anaconda 3 
-    wget -c https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh
-    /bin/bash Anaconda3-2020.02-Linux-x86_64.sh -bfp /usr/local
+    rm -rf /var/lib/apt/lists/*
+    #Installing Miniforge3
+    wget -c https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
+    /bin/bash Miniforge3-Linux-x86_64.sh -bfp /usr/local
     #Conda configuration of channels from .condarc file
     conda config --file /.condarc --add channels defaults
     conda config --file /.condarc --add channels conda-forge
-    conda update conda
-    #List installed environments
-    conda list
+    mamba install sage jupyterlab --no-docs -c conda-forge --yes
 
 %environment
-    export LC_ALL=en_US.utf-8
-    export LANG=en_US.utf-8
-    source /opt/etc/bashrc
+    # export LC_ALL=en_US.utf-8
+    # export LANG=en_US.utf-8
+

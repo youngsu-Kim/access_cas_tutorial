@@ -51,7 +51,7 @@ SDSC Expanse CPU | [2TB](https://www.sdsc.edu/support/user_guides/expanse.html#c
 
 To use ACCESS resources, one converts allocation credit to resource hours. The rate is determined by each supercomputing center. Often, they are in the unit of SU (service-unit), and one SU corresponds to one CPU (core) hour. 
 
-**Warning:** One will be charged by the resources we request not by the portion of resources one utilize. For instance, if one asks for 4 CPUs, but ended up using only 2, one will be still charged for the SUs for 4 CPUs. It is important to monitor resource usage and we discuss it in this tutorial, in Section xxxx.
+**Warning:** One will be charged by the resources we request not by the portion of resources one utilizes. For instance, if one asks for 4 CPUs, but ended up using only 2, one will be still charged for the SUs for 4 CPUs. It is important to monitor resource usage and we discuss it in this tutorial, in Section xxxx.
 
 Generally, memory requests are done via CPU requests. Consider the PSC Bridges-2 node. 
 
@@ -76,29 +76,38 @@ You may choose the web desktop option by clicking on Yes for "Enable web desktop
 Jetstream2 gives the full access to the system and users can use the `sudo` command. For the installation of SageMath, we follow their instructions on [here](https://doc.sagemath.org/html/en/installation/conda.html). The script below installs Mamba-forge (and automatically agrees to their License agreement) and install SageMath. 
 
 ``` shell
-curl -L -O https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh
-sh Mambaforge-$(uname)-$(uname -m).sh -b
-PATH=~/mambaforge/bin/:#PATH
-mamba create -n sage sage python
+curl -L -O https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
+sh Miniforge3-Linux-x86_64.sh -bp ~/.conda
+PATH=~/miniforge3/bin:#PATH
+mamba install sage python --yes
 ```
+
+Note: You may need to use `conda` if `mamba` is not available. 
 
 To use SageMath, one needs to activate the conda (mamba) environment. This requires logging out and logging in.
 
 ``` shell
-mamba init
+conda init
 exit
 ```
 
-Reconnect and run the following command to start SageMath.
+Reconnect and type sage to use it:
 
 ``` shell
-mamba activate sage
 sage
 ```
 
 To use Jetstream2 as a remote JupterLab/Note server for SageMath, please follow the additional instructions here. 
 
-> Add instructions ####
+``` shell
+mamba install jupyterlab --yes
+jupyter notebook --generate-config
+echo "c.NotebookApp.ip = '0.0.0.0'" >> .jupyter/jupyter_notebook_config.py
+```
+
+https://docs.jetstream-cloud.org/ui/exo/troubleshooting/#i-cant-copy-and-paste-tofrom-the-web-shell-or-web-desktop-guacamole
+
+https://stackoverflow.com/questions/45421163/anaconda-vs-miniconda
 
 #### Macaulay2 
 
@@ -148,27 +157,30 @@ Add how to uninstall
 
 ###JupyterLab on Expanse
 
-#### Singularity container
-
-> This supposes to work but it doesn't. Try it with module load anaconda3.
-
 ``` shell
 export PATH="/cm/shared/apps/sdsc/galyleo:${PATH}"
-module load singularitypro
-galyleo launch --account css101 --partition shared --cpus 1 --memory 2 --time-limit 00:30:00 --sif macaulay2_ubuntu_latest.sif 
+galyleo launch --account css101 --partition debug --cpus 2 --memory 4 --time-limit 00:30:00 --conda-env sage_jupyter --conda-yml env_sage.yml --mamba
 ```
 
-Build from environment.yml 
+`env_sage.yml` file
 
-``` shell
-export PATH="/cm/shared/apps/sdsc/galyleo:${PATH}"
-galyleo launch --account css101 --partition shared --cpus 1 --memory 2 --time-limit 00:30:00 --conda-yml environment.yml --conda-env sage
+``` yml
+name: sage_jupyter
+ 
+channels:
+  - conda-forge
+  - anaconda
+
+dependencies:
+  - python
+  - jupyterlab
+  - ipywidgets
+  - sage
 ```
 
 Source https://education.sdsc.edu/training/interactive/202206_ciml_si22/section1_3/quickstart-jupyter-notebooks.pdf
 
 ## Todo 
-<!-- 
-Share: GitHub user name - sinkovit -->
-
-Add how to on Expanse 
+- Check out other supercomputing centers
+- Add examples
+- Add monitoring
