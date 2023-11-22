@@ -11,17 +11,19 @@ Stage: build
     wget 
     apt-get clean -y
     rm -rf /var/lib/apt/lists/*
-    #Installing Miniforge3
+    ##
+    ## Installing Miniforge3
     wget -c https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
     /bin/bash Miniforge3-Linux-x86_64.sh -bfp /usr/local
-    #Conda configuration of channels from .condarc file
+    ##
+    ## Conda configuration of channels from .condarc file
     conda config --file /.condarc --add channels defaults
     conda config --file /.condarc --add channels conda-forge
     mamba install sage jupyterlab -c conda-forge --yes
     conda clean -a
     rm Miniforge3-Linux-x86_64.sh
 
-%environment
+#%environment
     # export LC_ALL=en_US.utf-8
     # export LANG=en_US.utf-8
 
