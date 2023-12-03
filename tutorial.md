@@ -1,6 +1,6 @@
 # SageMath and Macaulay2 on ACCESS
 
-## Motivation
+## Introduction
 
 Computer algebra software (CAS) has become an indispensable tool in several areas of research and can be used to enhance the quality of teaching. Often, it provides computational evidence that leads to finding patterns, or for students, it provides another way of getting into mathematics. There is a collection of CAS such as CoCoa, Macaulay2, Magma, SageMath, and Singular to name a few. They are easy to install on a personal or Apple computer. However, due to the computation intensity, researchers often face limitations of memory, storage, or computing power. 
 
@@ -12,28 +12,24 @@ The tutorial will be particularly useful for those who do not have on-campus com
 
 ## Acknowledgments
 
-Rewrite this.
-This project started as part of the NSF-funded (#2230127) cyberinfrastructure professional training led by Dr. Mary Thomas at the San Diego Supercomputing Center. The author participated as a trainee in 2023 as a high-performance faculty fellow at California State University San Bernardino.
-
-In addition to the PI, Dr. Thomas, the author appreciates the help and support from the mentors, especially Dr. Rick Wagner and Dr. Bob Sinkovits. 
+This project started as part of the NSF-funded (#2230127) cyberinfrastructure professional training led by Dr. Mary Thomas at the San Diego Supercomputing Center. The author participated as a trainee for the year 2023 and has been serving as a high-performance faculty fellow at California State University San Bernardino. In addition to the PI, Dr. Thomas, the author appreciates the help and support from the mentors, especially Dr. Rick Wagner and Dr. Bob Sinkovits. 
 
 ## Structure of the Tutorial and Timeline 
 
 > When finished add a short description of the content and timeline####
 
-## Allocations
+## ACCESS Allocations
 
-This tutorial focuses on ACCESS and assumes that one has allocations on ACCESS. To request allocations on ACCESS (it is free, and the process is simple), please visit this [page](https://allocations.access-ci.org/prepare-requests-overview#comparison-table) for details. Once you have allocations, it is time to choose the supercomputing center(s) for your project.
+This tutorial focuses on [ACCESS](https://allocations.access-ci.org) and assumes that one has allocations on ACCESS. To request allocations on ACCESS (it is free, and the process is simple), please visit this [page](https://allocations.access-ci.org/prepare-requests-overview#comparison-table) for details. Once you have allocations, it is time to choose the supercomputing center(s) for your project.
 
-On ACCESS, one submits an exchange request to use allocations on a supercomputing center. Here, we assume two scenarios:
+On ACCESS, one submits an exchange request to use a supercomputing center. Here, we assume two scenarios:
 
 1. Project requiring large memory
 2. Project requiring many CPUs (cores)
 
-Large Memory Nodes:
+### Large Memory Nodes on ACCESS
 
-ACCESS provides a large-memory filter on its [webpage](https://allocations.access-ci.org/resources).  
-As of today (####write date here####), these are the search results. 
+ACCESS provides a large-memory filter on its [webpage](https://allocations.access-ci.org/resources). As of 12/3/2023, these are the search results. 
 
 |Node Name|Memory Size|
 |--|--|
@@ -46,18 +42,18 @@ SDSC Expanse CPU | [2TB](https://www.sdsc.edu/support/user_guides/expanse.html#c
 
 \* NCSA Delta GPU (Delta GPU) is for GPU, and such a node often requires more allocation credits. So, we exclude this in this tutorial.
 
-### Converting ACCESS allocations to Computing center hours 
+### Note on exchange requests and computing center hours 
 
-To use ACCESS resources, one converts allocation credit to resource hours. The rate is determined by each supercomputing center. Often, they are in the unit of SU (service unit), and one SU corresponds to one CPU (core) hour. 
+To use ACCESS resources, one converts allocation credit to resource hours. The rate is determined by each supercomputing center. Often, they are in the unit of SU (service unit), and one SU corresponds to one CPU (core) hour. See the official page [here](https://allocations.access-ci.org/manage-allocations-overview#exchanges-and-transfers) and their [exchange calculator](https://allocations.access-ci.org/exchange_calculator).
 
 **Warning:** One will be charged by the resources one requests, not by the portion of resources one utilizes. For instance, let's say one asks for 4 CPUs but ends up using only 2. Then, one is still charged for the SUs for the 4 CPUs. It is important to monitor resource usage, and we discuss it in this tutorial, in Section <link to resource monitor section>
 
-> Generally, memory requests are done via CPU requests. Consider the PSC Bridges-2 node. 
-> Update this part (Bob's comment). 
+<!-- > Generally, memory requests are done via CPU requests. Consider the PSC Bridges-2 node.  -->
+<!-- > Update this part (Bob's comment).  -->
 
-## Indiana Jetstream2
+## IU Jetstream2
 
-Indiana Jetstream2 is unique as it provides full desktop-like environments. Several supercomputing centers offer only a portal and/or SSH access. Since it is most close to the PC or Mac environment, we cover this first. 
+Indiana University Jetstream2 is unique as it provides full virtual machine environments with admin privileges. Several supercomputing centers offer only a portal and/or SSH access. Since it is most close to the PC or Mac environment, we cover this first. 
 
 Navigate to Instance sources -> Choose an Instance Source -> Select an image, e.g., Ubuntu 22.04 (Latest).
 
@@ -73,11 +69,9 @@ Navigate to Instance sources -> Choose an Instance Source -> Select an image, e.
 
 You may choose the web desktop option by clicking on "Yes" for "Enable web desktop." Or you may use the SSH or Web Shell. Once it finishes building your environment, use any method of your choice to access the server.
 
-> Note: #### Add how to find the address for SSH ####
+### SageMath on IU Jetstream2
 
-#### SageMath on Jetstream2
-
-Jetstream2 gives full access to the system, and users can use the `sudo` command. For the installation of SageMath, we follow the official instructions on [here](https://doc.sagemath.org/html/en/installation/conda.html). The script below installs Mini-forge (and automatically agrees to their License Agreement) SageMath. 
+Jetstream2 gives full access to the system, and users can use the `sudo` command. For the installation of SageMath, we follow the official instructions [here](https://doc.sagemath.org/html/en/installation/conda.html). The script below installs Mini-forge (and automatically agrees to their License Agreement) SageMath. 
 
 ``` shell
 curl -L -O https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
@@ -111,7 +105,7 @@ Reconnect and type sage to use it:
 sage
 ```
 
-#### JupyterLab on Jetstream2
+### JupyterLab on IU Jetstream2
 
 To use Jetstream2 as a remote JupterLab/Note server for SageMath, please follow the additional instructions here. 
 
@@ -158,14 +152,12 @@ In this example, the URL is
   <img src="./images/indiana_jetstream2_sage/25-replace_ip.png" width="40%" />    
 </p>
 
-Note: This provides a non-secure connection. Follow the additional instructions if you deal with sensitive data. 
-
-> Add info about secure connection settings.
+Note: This provides a non-secure connection. A user may want to check out the JupyterHub's security basics section [here](https://jupyterhub.readthedocs.io/en/latest/tutorial/getting-started/security-basics.html.)
 
 
-https://stackoverflow.com/questions/45421163/anaconda-vs-miniconda
+<!-- https://stackoverflow.com/questions/45421163/anaconda-vs-miniconda -->
 
-#### Macaulay2 on Jetstream2
+### Macaulay2 on IU Jetstream2
 
 One can install Macaulay2 in Ubuntu 22.04 with `apt` as explained on the Macaulay2 [webpage](https://macaulay2.com/Downloads/GNU-Linux/Ubuntu/index.html). The following commands install and start Macaulay2. 
 
@@ -178,27 +170,21 @@ M2
   <img src="./images/indiana_jetstream2_m2/Screenshot from 2023-11-25 21-56-14.png" width="40%" />    
 </p>
 
-#### To-do
+### Monitoring resources on IU Jetstream2
 
-> Add how to check the resources while running
+> (Under construction) 
 
-## Expanse at the San Diego Supercomputing Center
+## SDSC Expanse
 
-Expanse provides a Linux shell to which one can SSH. One does *not* have the admin privilege on Expanse. We can `load` the Anaconda environment to install SageMath. However, Singularity containers provide a quick and easy way of running the software. For JupyterLab, we will use Expanses' `Galyleo` environment.  
+Expanse on San Diego Supercomputing Center (SDSC) provides a Linux shell to which one can SSH. One does *not* have the admin privilege on Expanse. We can `load` the Anaconda environment to install SageMath. However, Singularity containers provide a quick and easy way of running the software. For JupyterLab, we will use Expanses' `Galyleo` environment.  
 
-Singularity uses a container file, which is similar to a Docker container. One can create and load Docker containers in Singularity, but the conversion takes time and often produces several warnings. Building a Singularity container from its definition file is a more streamlined approach, and here we include the definition files written by the author. 
+## SageMath and Macaulay2 on SDSC Expanse
 
-``` 
-Add singularity definition files of SageMath
-```
+With singularity, we can treat SageMath and Macaulay2 simultaneously.
 
-``` 
-Add singularity definition files of Macaulay2
-```
+Singularity uses a container file, which is similar to a Docker container. One can create and load Docker containers in Singularity, but the conversion takes time and often produces several warnings. Building a Singularity container from its definition file is a more streamlined approach. 
 
-They are also available from the author's Sylabs account. To download these files, first the `singularitypro` module:
-
-> Consider using a different hosting service
+For convenience, we include the definition files written by the author at the end of this tutorial. The container images are available from the author's Sylabs account. To download these files, first the `singularitypro` module:
 
 ``` shell
 module load singularitypro
@@ -207,33 +193,45 @@ module load singularitypro
 and run the following commands
 
 ``` shell
-singularity pull --arch amd64 library://youngsu-kim/cas/sage:latest # for SageMath 
-singularity pull --arch amd64 library://youngsu-kim/cas/macaulay2_ubuntu:latest # for Macaulay2
+singularity pull --arch amd64 library://youngsu-kim/cas/sage:latest       # for SageMath  
+singularity pull --arch amd64 library://youngsu-kim/cas/macaulay2:latest  # for Macaulay2
 ```
 
 You only download them once, and it takes around 2 minutes on Expanse. Now, run them by loading these images with Singularity.
 
 ``` shell
 $ ls -alth *.sif
--rwxr-xr-x 1 youngsukim sds173 411M Nov 19 20:19 macaulay2_ubuntu_latest.sif
+-rwxr-xr-x 1 youngsukim sds173 411M Nov 19 20:19 macaulay2_latest.sif
 -rwxr-xr-x 1 youngsukim sds173 2.1G Nov 19 20:19 sage_latest.sif
 ```
 
+Now we can load them by executing the following commands.
+
+``` shell
+# sagemath
+singularitypro shell ./sage_latest.sif
+sage
 ```
-singularity shell # for SageMath
+
+``` shell
+# macaulay2
+singularitypro shell ./macaulay2_latest.sif
+M2
 ```
 
 > Note: Be sure to run them on a compute node other than the login nodes. 
 > Running a heavy task on a login node will affect the system and other users negatively.
 
-### JupyterLab on Expanse
+### JupyterLab on SDSC Expanse
+
+To run SageMath or Macaulay2 on JupyterLab, please run the following command in the same folder with the `env_sage.yml` file. This does not use singularity containers. 
 
 ``` shell
 export PATH="/cm/shared/apps/sdsc/galyleo:${PATH}"
 galyleo launch --account css101 --partition debug --cpus 2 --memory 4 --time-limit 00:30:00 --conda-env sage_jupyter --conda-yml env_sage.yml --mamba
 ```
 
-`env_sage.yml` file
+`env_sage.yml` file:
 
 ``` yml
 name: sage_jupyter
@@ -249,9 +247,18 @@ dependencies:
   - sage
 ```
 
-Source https://education.sdsc.edu/training/interactive/202206_ciml_si22/section1_3/quickstart-jupyter-notebooks.pdf
+The output of `galyleo` command includes an URL and open it in your browser.
 
-#### SageMath with Anaconda 
+> (under construction) add images.
+
+For more details about this approach, refer to the notes by Marty Kandes at SDSC [here](https://education.sdsc.edu/training/interactive/202206_ciml_si22/section1_3/quickstart-jupyter-notebooks.pdf). 
+
+### Monitoring resources on SDSC Expanse
+
+> (Under construction) 
+
+
+### SageMath with Anaconda on SDSC Expanse
 
 It is similar to the one for Jetstream2, but here we need to use `conda` instead of `mamba`. Generally, `mamba` works much faster than `conda`. This installation needs to be done once.
 
@@ -275,13 +282,13 @@ conda activate sage
 sage
 ```
 
-##### Uninstall SageMath installed with Conda
+<!-- ##### Uninstall SageMath installed with Conda
 
 It is simple to remove the environment. ...
 
 ``` shell
 conda env remove sage
-```
+``` -->
 
 ### Singularity Container Definitions
 
@@ -329,7 +336,7 @@ Stage: build
 ## Todo 
 - Add examples
 - Add monitoring
-- Check out other supercomputing centers
-Ask Bob to make it available to ask for ACCESS allocation for testing purposes (Do I need to inform Alana?)
-- Ask Bob if possible to make a group allocation on Expanse
+<!-- - Check out other supercomputing centers -->
+<!-- - Ask Bob to make it available to ask for ACCESS allocation for testing purposes (Do I need to inform Alana?) -->
+<!-- - Ask Bob if possible to make a group allocation on Expanse -->
   
