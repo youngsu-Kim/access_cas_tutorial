@@ -14,9 +14,28 @@ The tutorial will be particularly useful for those who do not have on-campus com
 
 This project started as part of the NSF-funded (#2230127) cyberinfrastructure professional training led by Dr. Mary Thomas at the San Diego Supercomputing Center. The author participated as a trainee for the year 2023 and has been serving as a high-performance faculty fellow at California State University San Bernardino. In addition to the PI, Dr. Thomas, the author appreciates the help and support from the mentors, especially Dr. Rick Wagner and Dr. Bob Sinkovits. 
 
-## Structure of the Tutorial and Timeline 
+## Content
 
-> When finished add a short description of the content and timeline####
+- [Introduction](#introduction)
+- [Acknowledgments](#acknowledgments)
+- [Structure of the Tutorial and Timeline](#structure-of-the-tutorial-and-timeline)
+- [ACCESS Allocations](#access-allocations)
+  - [Large Memory Nodes on ACCESS](#large-memory-nodes-on-access)
+  - [Note on exchange requests and computing center hours](#note-on-exchange-requests-and-computing-center-hours)
+- [IU Jetstream2](#iu-jetstream2)
+  - [SageMath on IU Jetstream2](#sagemath-on-iu-jetstream2)
+  - [JupyterLab on IU Jetstream2](#jupyterlab-on-iu-jetstream2)
+  - [Macaulay2 on IU Jetstream2](#macaulay2-on-iu-jetstream2)
+  - [Monitoring resources on IU Jetstream2](#monitoring-resources-on-iu-jetstream2)
+- [SDSC Expanse](#sdsc-expanse)
+- [SageMath and Macaulay2 on SDSC Expanse](#sagemath-and-macaulay2-on-sdsc-expanse)
+  - [JupyterLab on SDSC Expanse](#jupyterlab-on-sdsc-expanse)
+  - [Monitoring resources on SDSC Expanse](#monitoring-resources-on-sdsc-expanse)
+  - [SageMath with Anaconda on SDSC Expanse](#sagemath-with-anaconda-on-sdsc-expanse)
+  - [Singularity Container Definitions](#singularity-container-definitions)
+    - [Macaulay2](#macaulay2)
+    - [SageMath](#sagemath)
+- [Todo](#todo)
 
 ## ACCESS Allocations
 
