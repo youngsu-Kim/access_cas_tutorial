@@ -1,7 +1,8 @@
 alias srun-large-memory='srun --account=css101  --partition=large-shared --nodes=1 --ntasks-per-node=1 --cpus-per-task=16 --mem=256G --time=00:30:00 --pty --wait=0 /bin/bash'
 
-
-export GC_INITIAL_HEAP_SIZE=8G
+# export GC_NPROCS=4 
+# export GC_MARKERS=4
+export GC_INITIAL_HEAP_SIZE=60G
 M2
 
 R = QQ[x_1..x_12]

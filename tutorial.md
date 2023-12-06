@@ -28,7 +28,7 @@ This project started as part of the NSF-funded (#2230127) cyberinfrastructure pr
   - [Macaulay2 on IU Jetstream2](#macaulay2-on-iu-jetstream2)
   - [Monitoring resources on IU Jetstream2](#monitoring-resources-on-iu-jetstream2)
 - [SDSC Expanse](#sdsc-expanse)
-- [SageMath and Macaulay2 on SDSC Expanse](#sagemath-and-macaulay2-on-sdsc-expanse)
+  - [SageMath and Macaulay2 on SDSC Expanse](#sagemath-and-macaulay2-on-sdsc-expanse)
   - [JupyterLab on SDSC Expanse](#jupyterlab-on-sdsc-expanse)
   - [Monitoring resources on SDSC Expanse](#monitoring-resources-on-sdsc-expanse)
   - [SageMath with Anaconda on SDSC Expanse](#sagemath-with-anaconda-on-sdsc-expanse)
@@ -39,7 +39,11 @@ This project started as part of the NSF-funded (#2230127) cyberinfrastructure pr
 
 ## ACCESS Allocations
 
-This tutorial focuses on [ACCESS](https://allocations.access-ci.org) and assumes that one has allocations on ACCESS. To request allocations on ACCESS (it is free, and the process is simple), please visit this [page](https://allocations.access-ci.org/prepare-requests-overview#comparison-table) for details. Once you have allocations, it is time to choose the supercomputing center(s) for your project.
+This tutorial focuses on [ACCESS](https://allocations.access-ci.org) and assumes that one has allocations on ACCESS. To request allocations on ACCESS (it is free, and the process is simple), please visit this [page](https://allocations.access-ci.org/prepare-requests-overview#comparison-table) for details. 
+
+>>>> add more information about allocation tiers
+
+Once you have allocations, it is time to choose the supercomputing center(s) for your project.
 
 On ACCESS, one submits an exchange request to use a supercomputing center. Here, we assume two scenarios:
 
@@ -48,7 +52,7 @@ On ACCESS, one submits an exchange request to use a supercomputing center. Here,
 
 ### Large Memory Nodes on ACCESS
 
-ACCESS provides a large-memory filter on its [webpage](https://allocations.access-ci.org/resources). As of 12/3/2023, these are the search results. 
+ACCESS provides a large-memory filter on its [webpage](https://allocations.access-ci.org/resources). As of 12/3/2023, these are the search results. Note that these nodes have at least 1TB of memory. If your memory requirement is modest, say about 100 - 200 GB of memory, you may want to refer to the multicore nodes listed below as they are often equipped with 128 GB - 512 GB of memory. 
 
 |Node Name|Memory Size|
 |--|--|
@@ -60,6 +64,22 @@ Purdue Anvil CPU | 1TB
 SDSC Expanse CPU | [2TB](https://www.sdsc.edu/support/user_guides/expanse.html#charging)
 
 \* NCSA Delta GPU (Delta GPU) is for GPU, and such a node often requires more allocation credits. So, we exclude this in this tutorial.
+
+### Multicore-Compute Nodes on ACCESS
+
+- Georgia Tech GaTech Hive Cluster
+- IACS at Stony Brook Ookami
+- Indiana Jetstream2
+- Johns Hopkins University (Rockfish - Large Memory)
+- Johns Hopkins University (Rockfish - Regular Memory)
+- Kentucky Research Informatics Cloud (KyRIC) Large Memory Nodes
+- NCSA Delta CPU (Delta CPU)
+- NCSA Delta GPU (Delta GPU)
+- PSC Bridges-2 Extreme Memory (Bridges-2)
+- PSC Bridges-2 Regular Memory (Bridges-2)
+- Purdue Anvil CPU
+- SDSC Expanse CPU
+
 
 ### Note on exchange requests and computing center hours 
 
@@ -197,9 +217,9 @@ M2
 
 Expanse on San Diego Supercomputing Center (SDSC) provides a Linux shell to which one can SSH. One does *not* have the admin privilege on Expanse. We can `load` the Anaconda environment to install SageMath. However, Singularity containers provide a quick and easy way of running the software. For JupyterLab, we will use Expanses' `Galyleo` environment.  
 
-## SageMath and Macaulay2 on SDSC Expanse
+### SageMath and Macaulay2 on SDSC Expanse
 
-With singularity, we can treat SageMath and Macaulay2 simultaneously.
+With singularity, we can treat SageMath and Macaulay2 simultaneously. This approach also works for Purdue Anvil where `singularitypro` is replaced by `singularity`, and one need not load the module.  
 
 Singularity uses a container file, which is similar to a Docker container. One can create and load Docker containers in Singularity, but the conversion takes time and often produces several warnings. Building a Singularity container from its definition file is a more streamlined approach. 
 
@@ -217,14 +237,7 @@ singularity pull --arch amd64 library://youngsu-kim/cas/macaulay2:latest  # for 
 ```
 
 You only download them once, and it takes around 2 minutes on Expanse. Now, run them by loading these images with Singularity.
-
-``` shell
-$ ls -alth *.sif
--rwxr-xr-x 1 youngsukim sds173 411M Nov 19 20:19 macaulay2_latest.sif
--rwxr-xr-x 1 youngsukim sds173 2.1G Nov 19 20:19 sage_latest.sif
-```
-
-Now we can load them by executing the following commands.
+Now, we can load them by executing the following commands.
 
 ``` shell
 # sagemath
