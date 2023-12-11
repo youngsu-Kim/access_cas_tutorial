@@ -10,6 +10,8 @@ The primary goal of this tutorial is to present a streamlined procedure and demo
 
 The tutorial will be particularly useful for those who do not have on-campus computing resources or run a summary program utilizing SageMath or Macaulay2, as the resources in this tutorial (ACCESS) are available for academic purposes at no cost. For questions, comments, or suggestions, please contact Youngsu Kim at youngsu.kim@csusb.edu. 
 
+<!-- ## How to contribute -->
+
 ## Acknowledgments
 
 This project started as part of the NSF-funded (#2230127) cyberinfrastructure professional training led by Dr. Mary Thomas at the San Diego Supercomputing Center. The author participated as a trainee for the year 2023 and has been serving as a high-performance faculty fellow at California State University San Bernardino. In addition to the PI, Dr. Thomas, the author appreciates the help and support from the mentors, especially Dr. Rick Wagner and Dr. Bob Sinkovits. 
@@ -18,7 +20,7 @@ This project started as part of the NSF-funded (#2230127) cyberinfrastructure pr
 
 - [Introduction](#introduction)
 - [Acknowledgments](#acknowledgments)
-- [Structure of the Tutorial and Timeline](#structure-of-the-tutorial-and-timeline)
+- [Content](#content)
 - [ACCESS Allocations](#access-allocations)
   - [Large Memory Nodes on ACCESS](#large-memory-nodes-on-access)
   - [Note on exchange requests and computing center hours](#note-on-exchange-requests-and-computing-center-hours)
@@ -35,14 +37,12 @@ This project started as part of the NSF-funded (#2230127) cyberinfrastructure pr
   - [Singularity Container Definitions](#singularity-container-definitions)
     - [Macaulay2](#macaulay2)
     - [SageMath](#sagemath)
-- [Todo](#todo)
+- [To-dos](#to-dos)
 
 ## ACCESS Allocations
 
 This tutorial focuses on [ACCESS](https://allocations.access-ci.org) and assumes that one has allocations on ACCESS. To request allocations on ACCESS (it is free, and the process is simple), please visit this [page](https://allocations.access-ci.org/prepare-requests-overview#comparison-table) for details. 
-
->>>> add more information about allocation tiers
-
+<!-- >>>> add more information about allocation tiers -->
 Once you have allocations, it is time to choose the supercomputing center(s) for your project.
 
 On ACCESS, one submits an exchange request to use a supercomputing center. Here, we assume two scenarios:
@@ -58,10 +58,10 @@ ACCESS provides a large-memory filter on its [webpage](https://allocations.acces
 |--|--|
 Indiana Jetstream2 Large Memory | 1TB
 Kentucky Research Informatics Cloud (KyRIC) Large Memory Nodes | 3TB
-NCSA Delta GPU (Delta GPU) | NA*
 PSC Bridges-2 Extreme Memory (Bridges-2) | 4TB
 Purdue Anvil CPU | 1TB
 SDSC Expanse CPU | [2TB](https://www.sdsc.edu/support/user_guides/expanse.html#charging)
+<!-- NCSA Delta GPU (Delta GPU) | NA* -->
 
 \* NCSA Delta GPU (Delta GPU) is for GPU, and such a node often requires more allocation credits. So, we exclude this in this tutorial.
 
@@ -181,7 +181,7 @@ For the IP address, go to the browser you used to create the instance.
   <img src="./images/indiana_jetstream2_sage/24-grab_ip_address.png" width="40%" />    
 </p>
 
-In this example, the IP address is 149.165.170.168, but it should be different for your instance. Now open the browser and type the information in the URL, and you will be connected to the JupterLab.
+In this example, the IP address is 149.165.170.168, but it probably is  different for your instance. Now open the browser and type the information in the URL, and you will be connected to the JupterLab.
 
 In this example, the URL is 
 
@@ -191,7 +191,7 @@ In this example, the URL is
   <img src="./images/indiana_jetstream2_sage/25-replace_ip.png" width="40%" />    
 </p>
 
-Note: This provides a non-secure connection. A user may want to check out the JupyterHub's security basics section [here](https://jupyterhub.readthedocs.io/en/latest/tutorial/getting-started/security-basics.html.)
+Note: This provides a non-secure connection. A user may want to check out the JupyterHub's security basics section [here](https://jupyterhub.readthedocs.io/en/latest/tutorial/getting-started/security-basics.html).
 
 
 <!-- https://stackoverflow.com/questions/45421163/anaconda-vs-miniconda -->
@@ -215,11 +215,11 @@ M2
 
 ## SDSC Expanse
 
-Expanse on San Diego Supercomputing Center (SDSC) provides a Linux shell to which one can SSH. One does *not* have the admin privilege on Expanse. We can `load` the Anaconda environment to install SageMath. However, Singularity containers provide a quick and easy way of running the software. For JupyterLab, we will use Expanses' `Galyleo` environment.  
+Expanse on San Diego Supercomputing Center (SDSC) provides a Linux shell to which one can SSH. One does *not* have the admin privilege on Expanse. We can `load` the Anaconda environment to install SageMath. However, Singularity containers provide a quick and easy way of running SageMath, Macaulay2, and many other programs. For JupyterLab, we will use Expanses' `Galyleo` environment.  
 
 ### SageMath and Macaulay2 on SDSC Expanse
 
-With singularity, we can treat SageMath and Macaulay2 simultaneously. This approach also works for Purdue Anvil where `singularitypro` is replaced by `singularity`, and one need not load the module.  
+With singularity, we can treat SageMath and Macaulay2 simultaneously. This approach also works for Purdue Anvil where the `singularitypro` module is loaded as default.
 
 Singularity uses a container file, which is similar to a Docker container. One can create and load Docker containers in Singularity, but the conversion takes time and often produces several warnings. Building a Singularity container from its definition file is a more streamlined approach. 
 
@@ -236,7 +236,7 @@ singularity pull --arch amd64 library://youngsu-kim/cas/sage:latest       # for 
 singularity pull --arch amd64 library://youngsu-kim/cas/macaulay2:latest  # for Macaulay2
 ```
 
-You only download them once, and it takes around 2 minutes on Expanse. Now, run them by loading these images with Singularity.
+You only download them once and only the one you need (SageMath or Macaulay2), and it takes around 2 minutes on Expanse. Now, run them by loading these images with Singularity.
 Now, we can load them by executing the following commands.
 
 ``` shell
@@ -256,14 +256,47 @@ M2
 
 ### JupyterLab on SDSC Expanse
 
-To run SageMath or Macaulay2 on JupyterLab, please run the following command in the same folder with the `env_sage.yml` file. This does not use singularity containers. 
+To run SageMath or Macaulay2 on JupyterLab, please run the following command in the same folder with the `env_sage.yml` file. An example of `env_sage.yml` file is available in this sub-section. This approach does not use or need singularity containers. 
+
+Replace <your_account_number>, <node_type>, <ncpus>, <memory>, and <h\:m\:s>. See below for an example. 
 
 ``` shell
 export PATH="/cm/shared/apps/sdsc/galyleo:${PATH}"
-galyleo launch --account css101 --partition debug --cpus 2 --memory 4 --time-limit 00:30:00 --conda-env sage_jupyter --conda-yml env_sage.yml --mamba
+galyleo launch --account <your_account_number> --partition <node_type> --cpus <ncpus> --memory <memory> --time-limit <h:m:s> --conda-env sage_jupyter --conda-yml env_sage.yml --mamba
 ```
 
-`env_sage.yml` file:
+Your account can be found by running the following command on Expanse. Refer to the Managing Your User Account section [here](https://www.sdsc.edu/support/user_guides/expanse.html#managing).
+
+```shell
+expanse-client user
+```
+
+Here is what my account looks like:
+
+```
+[youngsukim@login01 ~]$ expanse-client user
+
+ Resource  expanse 
+
+╭───┬────────────┬───────┬─────────┬──────────────┬───────┬───────────┬─────────────────╮
+│   │ NAME       │ STATE │ PROJECT │ TG PROJECT   │  USED │ AVAILABLE │ USED BY PROJECT │
+├───┼────────────┼───────┼─────────┼──────────────┼───────┼───────────┼─────────────────┤
+│ 1 │ youngsukim │ allow │ cssabc  │ TG-TRA210010 │     2 │     20000 │               2 │
+│ 2 │ youngsukim │ allow │ cssxyz  │ TG-MTH230012 │ 10067 │     40000 │           10067 │
+╰───┴────────────┴───────┴─────────┴──────────────┴───────┴───────────┴─────────────────╯
+```
+
+
+> **Warning**: Be sure to check the Expanse node document. In particular, be aware that the `compute` node charges for all resources on the node no matter how much you request. See [here](https://www.sdsc.edu/support/user_guides/expanse.html#running) for details and start with the `shared` node if you are unsure.  
+
+Example of the variables:
+
+``` shell
+export PATH="/cm/shared/apps/sdsc/galyleo:${PATH}"
+galyleo launch --account cssxyz --partition debug --cpus 2 --memory 4 --time-limit 00:30:00 --conda-env sage_jupyter --conda-yml env_sage.yml --mamba
+```
+
+Example of the `env_sage.yml` file:
 
 ``` yml
 name: sage_jupyter
@@ -277,11 +310,31 @@ dependencies:
   - jupyterlab
   - ipywidgets
   - sage
+  # - jupyter-resource-usage
+  # uncomment the above line if you want to monitor memory usage in JupyterLab
 ```
 
 The output of `galyleo` command includes an URL and open it in your browser.
 
-> (under construction) add images.
+<details>
+<summary> Click for screenshots
+<p float="center">
+  <img src="./images/sdsc_expanse_sage/galyleo_input.png" width="45%" />    
+  <img src="./images/sdsc_expanse_sage/galyleo_output.png" width="45%" />    
+</p>
+</summary>
+</details>
+
+<details>
+<summary> Click for screenshots
+<p float="center">
+  <img src="./images/sdsc_expanse_sage/galyleo_web.png" width="45%" />    
+  <img src="./images/sdsc_expanse_sage/galyleo_ready.png" width="45%" />    
+</p>
+</summary>
+</details>
+
+
 
 For more details about this approach, refer to the notes by Marty Kandes at SDSC [here](https://education.sdsc.edu/training/interactive/202206_ciml_si22/section1_3/quickstart-jupyter-notebooks.pdf). 
 
@@ -365,10 +418,7 @@ Stage: build
     rm Miniforge3-Linux-x86_64.sh
 ```
 
-## Todo 
+## To-dos 
 - Add examples
 - Add monitoring
-<!-- - Check out other supercomputing centers -->
-<!-- - Ask Bob to make it available to ask for ACCESS allocation for testing purposes (Do I need to inform Alana?) -->
-<!-- - Ask Bob if possible to make a group allocation on Expanse -->
-  
+<!-- - Check out other supercomputing centers -->  
