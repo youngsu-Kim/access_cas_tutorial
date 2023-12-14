@@ -10,20 +10,28 @@ The primary goal of this tutorial is to present a streamlined procedure and demo
 
 The tutorial will be particularly useful for those who do not have on-campus computing resources or run a summary program utilizing SageMath or Macaulay2, as the resources in this tutorial (ACCESS) are available for academic purposes at no cost. For questions, comments, or suggestions, please contact Youngsu Kim at youngsu.kim@csusb.edu. 
 
-<!-- ## How to contribute -->
+## How to contribute
+
+Your feedback is invaluable and the main ingredient to maintain and improve this tutorial, and we encourage you to share your thoughts, suggestions, or any challenges you encountered. Feel free to reach out to [Youngsu Kim](youngsu.kim@csusb.edu) with your comments.
+
+Thanks to ACCESS, the author has **some allocation for testers** (MTH230034). Feel free to contact me for testing allocations with your ACCESS account ID. Please refer to the [instructions](https://www.psc.edu/creating-an-access-account/) by the Pittsburgh Supercomputing Center. 
 
 ## Acknowledgments
 
 This project started as part of the NSF-funded (#2230127) cyberinfrastructure professional training led by Dr. Mary Thomas at the San Diego Supercomputing Center. The author participated as a trainee for the year 2023 and has been serving as a high-performance faculty fellow at California State University San Bernardino. In addition to the PI, Dr. Thomas, the author appreciates the help and support from the mentors, especially Dr. Rick Wagner and Dr. Bob Sinkovits. 
+
+The author thanks the ACCESS program for allowing the testing allocation MTH230034. 
 
 ## Content
 
 - [Introduction](#introduction)
 - [Acknowledgments](#acknowledgments)
 - [Content](#content)
+  - [Timeline](#timeline)
 - [ACCESS Allocations](#access-allocations)
   - [Large Memory Nodes on ACCESS](#large-memory-nodes-on-access)
   - [Note on exchange requests and computing center hours](#note-on-exchange-requests-and-computing-center-hours)
+  - [Multicore-Compute Nodes on ACCESS](#multicore-compute-nodes-on-access)
 - [IU Jetstream2](#iu-jetstream2)
   - [SageMath on IU Jetstream2](#sagemath-on-iu-jetstream2)
   - [JupyterLab on IU Jetstream2](#jupyterlab-on-iu-jetstream2)
@@ -39,11 +47,24 @@ This project started as part of the NSF-funded (#2230127) cyberinfrastructure pr
     - [SageMath](#sagemath)
 - [To-dos](#to-dos)
 
+### Timeline
+
+<!-- Tutorial:             15-20 minutes.
+ACCESS Allocations:   The two entry level allocations has the processing time of 1-2 business days. It takes longer for the higher tiers.
+Allocation Exchange:  Takes between 3-5 business days.
+Setting up software:  5-10 minutes. -->
+
+| Task                | Estimated                        |
+|---------------------|----------------------------------|
+| Tutorial            | 15-20 minutes                    |
+| ACCESS Allocations  | 1-2 business days entry level, longer for higher tiers |
+| Allocation Exchange | 3-5 business days                |
+| Setting up software | 5-10 minutes                     |
+
+
 ## ACCESS Allocations
 
-This tutorial focuses on [ACCESS](https://allocations.access-ci.org) and assumes that one has allocations on ACCESS. To request allocations on ACCESS (it is free, and the process is simple), please visit this [page](https://allocations.access-ci.org/prepare-requests-overview#comparison-table) for details. 
-<!-- >>>> add more information about allocation tiers -->
-Once you have allocations, it is time to choose the supercomputing center(s) for your project.
+This tutorial focuses on [ACCESS](https://allocations.access-ci.org) and assumes that one has allocations on ACCESS. To request allocations on ACCESS (it is free, and the process is simple), please visit this [page](https://allocations.access-ci.org/prepare-requests-overview#comparison-table) for details. <!-- >>>> add more information about allocation tiers --> Once you have allocations, it is time to choose the supercomputing center(s) for your project.
 
 On ACCESS, one submits an exchange request to use a supercomputing center. Here, we assume two scenarios:
 
@@ -61,7 +82,6 @@ Kentucky Research Informatics Cloud (KyRIC) Large Memory Nodes | 3TB
 PSC Bridges-2 Extreme Memory (Bridges-2) | 4TB
 Purdue Anvil CPU | 1TB
 SDSC Expanse CPU | [2TB](https://www.sdsc.edu/support/user_guides/expanse.html#charging)
-<!-- NCSA Delta GPU (Delta GPU) | NA* -->
 
 \* NCSA Delta GPU (Delta GPU) is for GPU, and such a node often requires more allocation credits. So, we exclude this in this tutorial.
 
@@ -211,7 +231,39 @@ M2
 
 ### Monitoring resources on IU Jetstream2
 
-> (Under construction) 
+There are several ways to monitor CPU (and memory) usage, and `top` and `htop` are common and popular. Often `top` is readily available and `htop` requires installation. Open another terminal, e.g., webshell, and run the following command.
+
+``` shell
+top -u $USER
+```
+
+For more details, please refer to the top [document](https://man7.org/linux/man-pages/man1/top.1.html).
+
+Though these commands provide memory usage, it is often challenging to read or not as intuitive as the [jupyter-resource-usage](https://github.com/jupyter-server/jupyter-resource-usage) package for JupyterLab. The author wrote a script and made a Python package. 
+
+``` shell
+python3 -m pip install --user --upgrade -i https://test.pypi.org/simple/ memory-usage==0.0.4
+```
+
+Here is an example:
+<!-- 
+(base) exouser@cas-test1:~$ python3 -m pip install --user --upgrade -i https://test.pypi.org/simple/ memory-usage==0.0.4
+Looking in indexes: https://test.pypi.org/simple/
+Collecting memory-usage==0.0.4
+  Obtaining dependency information for memory-usage==0.0.4 from https://test-files.pythonhosted.org/packages/5c/e6/1ba710278696bbea065e644245cd4
+f49c8fe71ab805e49c05537ac3fdd8f/memory_usage-0.0.4-py3-none-any.whl.metadata
+  Downloading https://test-files.pythonhosted.org/packages/5c/e6/1ba710278696bbea065e644245cd4f49c8fe71ab805e49c05537ac3fdd8f/memory_usage-0.0.4
+-py3-none-any.whl.metadata (1.1 kB)
+Requirement already satisfied: psutil in ./miniforge3/lib/python3.10/site-packages (from memory-usage==0.0.4) (5.9.5)
+Downloading https://test-files.pythonhosted.org/packages/5c/e6/1ba710278696bbea065e644245cd4f49c8fe71ab805e49c05537ac3fdd8f/memory_usage-0.0.4-p
+y3-none-any.whl (3.4 kB)
+Installing collected packages: memory-usage
+Successfully installed memory-usage-0.0.4 -->
+
+``` shell
+(base) exouser@cas-test1:~$ python3 -c "import memory_usage.memory as mem; print(mem.get_memory());"         
+1.75GiB is used by exouser
+```
 
 ## SDSC Expanse
 
@@ -241,13 +293,13 @@ Now, we can load them by executing the following commands.
 
 ``` shell
 # sagemath
-singularitypro shell ./sage_latest.sif
+singularity shell ./sage_latest.sif
 sage
 ```
 
 ``` shell
 # macaulay2
-singularitypro shell ./macaulay2_latest.sif
+singularity shell ./macaulay2_latest.sif
 M2
 ```
 
@@ -340,7 +392,34 @@ For more details about this approach, refer to the notes by Marty Kandes at SDSC
 
 ### Monitoring resources on SDSC Expanse
 
-> (Under construction) 
+The process is the same as on [IU Jetstream2](#monitoring-resources-on-iu-jetstream2), but one needs to run the commands on the computing node (often monitoring is done in another terminal).
+
+First grab the node number:
+
+``` shell
+[youngsukim@login01 ~]$ squeue -u $USER
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+          26949673     debug     bash youngsuk  R       2:45      1 exp-9-55
+```
+
+In this example, we are on the login node and will connect (SSH) to `exp-9-55`.
+
+``` shell 
+[youngsukim@login01 ~]$ ssh exp-9-55
+[youngsukim@exp-9-55 ~]$
+```
+
+Now you can run programs like `top`. Here is an example of the memory_usage package.
+
+``` shell
+[youngsukim@login01 ~]$ ssh exp-9-55
+[youngsukim@exp-9-55 ~]$ python3 -m pip install --user --upgrade -i https://test.pypi.org/simple/ memory-usage==0.0.4
+Requirement already up-to-date: memory-usage==0.0.4 in ./.local/lib/python3.6/site-packages
+Requirement already up-to-date: psutil in ./.local/lib/python3.6/site-packages (from memory-usage==0.0.4)
+[youngsukim@exp-9-55 ~]$ python3 -c "import memory_usage.memory as mem; print(mem.get_memory());"         
+644.92MiB is used by youngsukim
+```
+
 
 
 ### SageMath with Anaconda on SDSC Expanse
@@ -420,5 +499,5 @@ Stage: build
 
 ## To-dos 
 - Add examples
-- Add monitoring
+<!-- - Add monitoring -->
 <!-- - Check out other supercomputing centers -->  
