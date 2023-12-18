@@ -14,7 +14,7 @@ The tutorial will be particularly useful for those who do not have on-campus com
 
 Your feedback is invaluable and the main ingredient to maintain and improve this tutorial, and we encourage you to share your thoughts, suggestions, or any challenges you encountered. Feel free to reach out to [Youngsu Kim](youngsu.kim@csusb.edu) with your comments.
 
-Thanks to ACCESS, the author has **some allocation for testers** (MTH230034). Feel free to contact me for testing allocations with your ACCESS account ID. Please refer to the [instructions](https://www.psc.edu/creating-an-access-account/) by the Pittsburgh Supercomputing Center. 
+Thanks to ACCESS, the author has **some allocation for testers** (MTH230034). Feel free to contact me for testing allocations with your ACCESS account ID. Please, refer to the ACCESS's [registration page](https://operations.access-ci.org/identity/new-user).
 
 ## Acknowledgments
 
