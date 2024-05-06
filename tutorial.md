@@ -171,16 +171,13 @@ To use Jetstream2 as a remote JupterLab/Note server for SageMath, please follow 
 ``` shell
 mamba install jupyterlab --yes
 # mamba install jupyter-resource-usage --yes
-rm .jupyter/jupyter_notebook_config.py || true
-jupyter notebook --generate-config
-echo "c.NotebookApp.ip = '0.0.0.0'" >> .jupyter/jupyter_notebook_config.py
 ```
 The above commands need to be executed once for each instance. 
 
 To start JupyterLab, execute the following command and follow the instructions below. 
 
 ``` shell
-jupyter lab
+jupyter lab --ip=0.0.0.0
 ```
 To connect to the JupyterLab we need the URL and token. The URL will be in the form
 
